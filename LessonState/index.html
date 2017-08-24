@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+    	/*
+				事件处理
+				react中的事件名称，首字母小写，驼峰命名法
+			*/
+
+			// var MyButton = React.createClass({
+			// 	handleClick: function() {
+			// 		alert("点击按钮触发的效果");
+			// 	},
+			// 	render: function() {
+			// 		return (
+			// 			<button onClick={this.handleClick}>{this.props.buttonTitle}</button>
+			// 		);
+			// 	}
+			// });
+			//
+			// ReactDOM.render(
+			// 	<MyButton buttonTitle="按钮"/>,
+			// 	document.getElementById('container')
+			// );
+
+			/*
+				state
+				props
+				组件自身的属性
+			*/
+
+			// var CheckButton = React.createClass({
+			// 	// 定义初始状态
+			// 	getInitialState: function() {
+			// 		return {
+			// 			isCheck: false
+			// 		}
+			// 	},
+			// 	// 定义事件绑定的方法
+			// 	handleChange: function() {
+			// 		this.setState({
+			// 			isCheck: !this.state.isCheck
+			// 		});
+			// 	},
+			// 	render: function() {
+			// 		// 根据状态值设置显示的文字
+			// 		// 在JSX语法中，不能直接使用if，要使用三目运算符，但可以在外部定义函数实现if
+			// 		var text = this.state.isCheck ? "已选中" : "未选中";
+			// 		return (
+			// 			<div>
+			// 				<input type="checkbox" onChange={this.handleChange} />
+			// 				{text}
+			// 			</div>
+			// 		);
+			// 	}
+			// });
+			//
+			// ReactDOM.render(
+			// 	<CheckButton />,
+			// 	document.getElementById("container")
+			// );
+
+			// 当state发生变化时，会调用组件内部的render方法
+
+			/*
+				输入框内容实时显示
+			*/
+
+			var Input = React.createClass({
+				getInitialState: function() {
+					return {
+						value: "请输入"
+					}
+				},
+				handleChange: function(event) {
+					// 读取用户输入的值
+					this.setState({
+						value: event.target.value
+					});
+				},
+				render: function() {
+					var value = this.state.value;
+					return (
+						<div>
+							<input type="text" value={value} onChange={this.handleChange} />
+							<p>{value}</p>
+						</div>
+					);
+				}
+			});
+
+			ReactDOM.render(
+				<Input />,
+				document.getElementById("container")
+			);
+    </script>
+</body>
+</html>
