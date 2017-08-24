@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+    	/*
+				props、state
+				props是组件自身的属性，一般用于嵌套的内外层组件中，负责传递信息
+				注意：props对象中的属性与组件的属性一一对应，不要直接去修改props中的属性的值
+			*/
+
+			/*
+				定义一个组件WebShow，功能：输出网站的名字和网址，网址是一个可以点击的链接
+				分析：定义一个组件WebName负责输出网站的名字，定义组件WebLink显示网站的网址，并且可以点击
+			*/
+			// var WebName = React.createClass({
+			// 	render: function() {
+			// 		return <h1>{this.props.webname}</h1>;
+			// 	}
+			// });
+			//
+			// var WebLink = React.createClass({
+			// 	render: function() {
+			// 		return <a href={this.props.weblink}>{this.props.weblink}</a>
+			// 	}
+			// });
+			//
+			// var WebShow = React.createClass({
+			// 	render: function() {
+			// 		return (
+			// 			<div>
+			// 				<WebName webname={this.props.wname}/>
+			// 				<WebLink weblink={this.props.wlink}/>
+			// 			</div>
+			// 		);
+			// 	}
+			// });
+			//
+			// ReactDOM.render(
+			// 	<WebShow wname="百度" wlink="http://www.baidu.com"/>,
+			// 	document.getElementById("container")
+			// );
+
+			/*
+				...this.props
+				props提供的语法糖，可以将父组件中的全部属性都复制给子组件
+			*/
+
+			// var Link = React.createClass({
+			// 	render: function() {
+			// 		return <a {...this.props}>{this.props.name}</a>
+			// 	}
+			// });
+			//
+			// ReactDOM.render(
+			// 	<Link href="http://www.baidu.com" name="百度" />,
+			// 	document.getElementById("container")
+			// );
+
+			/*
+				this.props.children
+
+				children是一个例外，不是跟组件的属性对应的。
+				表示组件的所有子节点
+			*/
+			// var ListComponent = React.createClass({
+			// 	render: function() {
+			// 		return (
+			// 			<ul>
+			// 				{
+			// 					/*
+			// 						列表项的数量以及内容不确定
+			// 						利用this.props.children从父组件获取需要展示的列表项内容
+			// 						使用React.Children.map方法
+			// 						返回值：数组对象
+			// 					*/
+			// 					React.Children.map(this.props.children, function(child) {
+			// 						// child是遍历得到的父组件的子节点
+			// 						return <li>{child}</li>
+			// 					})
+			// 				}
+			// 			</ul>
+			// 		);
+			// 	}
+			// });
+			//
+			// ReactDOM.render(
+			// 	<ListComponent>
+			// 		<h1>百度</h1>
+			// 		<a href="http://www.baidu.com">http://www.baidu.com</a>
+			// 	</ListComponent>,
+			// 	document.getElementById("container")
+			// );
+
+			/*
+				属性验证 propTypes
+			*/
+			// var ShowTitle = React.createClass({
+			// 	propTypes: {
+			// 		// title数据类型必须为字符串
+			// 		title: React.PropTypes.string.isRequired
+			// 	},
+			// 	render: function() {
+			// 		return <h1>{this.props.title}</h1>
+			// 	}
+			// });
+			//
+			// ReactDOM.render(
+			// 	<ShowTitle title="123" />,
+			// 	document.getElementById("container")
+			// );
+
+			/*
+				设置组件属性的默认值
+				通过实现组件的getDefaultProps方法，对属性设置默认值
+			*/
+
+			var MyTitle = React.createClass({
+				getDefaultProps: function() {
+					return {
+						title: "百度"
+					};
+				},
+				render: function() {
+					return <h1>{this.props.title}</h1>
+				}
+			});
+
+			ReactDOM.render(
+				<MyTitle />,
+				document.getElementById("container")
+			);
+
+    </script>
+</body>
+</html>
