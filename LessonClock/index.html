@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+			class Clock extends React.Component{
+				constructor(...args) {
+					super(...args);
+					this.state={h:0,m:0,s:0};
+
+					var _this = this;
+					setInterval(function() {
+						_this.tick();
+					}, 1000);
+				}
+
+				componentDidMount() {
+					this.tick();
+				}
+
+				componentWillUpdate() {
+					console.log("即将更新");
+				}
+
+				componentDidUpdate() {
+					console.log("刚更新完");
+				}
+
+				tick() {
+					var oDate = new Date();
+					this.setState({
+						h: oDate.getHours(),
+						m: oDate.getMinutes(),
+						s: oDate.getSeconds()
+					});
+				}
+
+				render() {
+					return <div>
+						<span>{this.state.h}</span>:
+						<span>{this.state.m}</span>:
+						<span>{this.state.s}</span>
+					</div>
+				}
+			}
+
+			ReactDOM.render(
+				<Clock />,
+				document.getElementById("container")
+			);
+    </script>
+</body>
+</html>
