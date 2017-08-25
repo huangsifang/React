@@ -76,28 +76,53 @@
 				输入框内容实时显示
 			*/
 
-			var Input = React.createClass({
-				getInitialState: function() {
-					return {
-						value: "请输入"
-					}
-				},
-				handleChange: function(event) {
+			// var Input = React.createClass({
+			// 	getInitialState: function() {
+			// 		return {
+			// 			value: "请输入"
+			// 		}
+			// 	},
+			// 	handleChange: function(event) {
+			// 		// 读取用户输入的值
+			// 		this.setState({
+			// 			value: event.target.value
+			// 		});
+			// 	},
+			// 	render: function() {
+			// 		var value = this.state.value;
+			// 		return (
+			// 			<div>
+			// 				<input type="text" value={value} onChange={this.handleChange} />
+			// 				<p>{value}</p>
+			// 			</div>
+			// 		);
+			// 	}
+			// });
+
+			// 修改后的类
+			class Input extends React.Component{
+				constructor(...args) {
+					super(...args); // 超类、父类构造函数
+					this.state={value: ''};
+				}
+
+				handleChange(event) {
 					// 读取用户输入的值
 					this.setState({
 						value: event.target.value
 					});
-				},
-				render: function() {
+				}
+
+				render() {
 					var value = this.state.value;
 					return (
 						<div>
-							<input type="text" value={value} onChange={this.handleChange} />
+							<input type="text" value={value} onChange={this.handleChange.bind(this)} />
 							<p>{value}</p>
 						</div>
 					);
 				}
-			});
+			}
 
 			ReactDOM.render(
 				<Input />,

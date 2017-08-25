@@ -95,11 +95,17 @@
 				分析：定义一个组件WebName负责输出网站的名字，定义组件WebLink显示网站的网址，并且可以点击
 			*/
 
-			var WebName = React.createClass({
-				render: function() {
+			// var WebName = React.createClass({
+			// 	render: function() {
+			// 		return <h1>百度</h1>;
+			// 	}
+			// });
+
+			class WebName extends React.Component {
+				render() {
 					return <h1>百度</h1>;
 				}
-			});
+			}
 
 			var WebLink = React.createClass({
 				render: function() {
