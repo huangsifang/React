@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+		<script src="../build/jquery.js"></script>
+		<style media="screen">
+			img {display: block; width: 512px; height: 384px;}
+		</style>
+</head>
+<body>
+		<blue-view></blue-view>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+			class LazyLoad extends React.Component{
+				constructor(...args) {
+					super(...args);
+
+					this.aImgPath=this.props.imgs.split(',');
+
+					// 简单的节流函数
+					//fun 要执行的函数
+					//delay 延迟
+					//time  在time时间内必须执行一次
+					function throttle(fun, delay, time) {
+					    var timeout,
+					        startTime = new Date();
+					    return function() {
+					        var context = this,
+					            args = arguments,
+					            curTime = new Date();
+					        clearTimeout(timeout);
+					        // 如果达到了规定的触发时间间隔，触发 handler
+					        if (curTime - startTime >= time) {
+					            fun.apply(context, args);
+					            startTime = curTime;
+					            // 没达到触发间隔，重新设定定时器
+					        } else {
+					            timeout = setTimeout(fun, delay);
+					        }
+					    };
+					};
+
+					const _this = this;
+					var n = 0;
+					function lazyload() {
+						var seeHeight = document.documentElement.clientHeight; // 可见区域高度
+						var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+						var img = _this.refs['div1'].children;
+
+						for(var i = n; i < _this.aImgPath.length; i++) {
+							if(img[i].offsetTop < seeHeight + scrollTop) {
+								if(img[i].getAttribute("src") == null) {
+										img[i].src = img[i].getAttribute("data-src");
+								}
+								n = i + 1;
+							}
+						}
+					}
+
+					// $(window).scroll(function() {
+					// 	var seeHeight = parseInt($(window).height());
+					// 	var scrollTop = parseInt($(window).scrollTop());
+					// 	var img = _this.refs['div1'].children;
+					// });
+
+					// window.onscroll = lazyload;
+					// 采用了节流函数
+					window.addEventListener('scroll',throttle(lazyload,500,1000));
+
+				}
+				componentDidMount() {
+					var seeHeight = document.documentElement.clientHeight; // 可见区域高度
+					for(var i = 0; i < this.aImgPath.length; i++) {
+						if(this.refs['div1'].children[i].offsetTop < seeHeight) {
+							if(this.refs['div1'].children[i].getAttribute("src") == null) {
+									this.refs['div1'].children[i].src = this.refs['div1'].children[i].getAttribute("data-src");
+							}
+						}
+					}
+				}
+				render() {
+					var arr=[];
+					for(var i=0; i<this.aImgPath.length; i++) {
+						arr.push(<img key={i} data-src={'../img/'+this.aImgPath[i]} alt="logo" />);
+					}
+					return <div ref="div1">{arr}</div>;
+				}
+			}
+			$(function() {
+				ReactDOM.render(
+					<LazyLoad imgs="logo1.jpg,logo2.jpg,logo3.jpg,logo4.jpg,logo1.jpg,logo2.jpg,logo3.jpg,logo4.jpg,logo1.jpg,logo2.jpg,logo3.jpg,logo4.jpg"/>,
+					$('blue-view')[0]
+				);
+			})
+    </script>
+</body>
+</html>

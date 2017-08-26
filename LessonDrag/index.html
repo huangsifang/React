@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+		<script src="../build/jquery.js"></script>
+		<style media="screen">
+			.box {width: 200px; height: 200px; background: #ccc; position: absolute;}
+		</style>
+</head>
+<body>
+		<blue-view></blue-view>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+    	class Drag extends React.Component{
+				constructor(...args) {
+					super(...args);
+
+					this.state={x: 0, y: 0};
+				}
+				fn(ev) {
+					var disX = ev.pageX - this.state.x;
+					var disY = ev.pageY - this.state.y;
+
+					var _this = this;
+
+					// $(document).mousemove(function(ev) {
+					// });
+
+					/*原生*/
+					document.onmousemove = function(ev) {
+						_this.setState({
+							x: ev.pageX-disX,
+							y: ev.pageY-disY
+						});
+					};
+
+					document.onmouseup = function() {
+						document.onmousemove = null;
+					};
+				}
+				render() {
+					return <div style={{left: this.state.x+'px', top: this.state.y+'px'}}
+					className="box"
+					onMouseDown={this.fn.bind(this)}>
+						111
+					</div>
+				}
+			}
+
+			$(function() {
+				ReactDOM.render(
+					<Drag />,
+					$('blue-view')[0]
+				);
+			})
+    </script>
+</body>
+</html>
