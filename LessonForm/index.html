@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+		<script src="../build/jquery.js"></script>
+</head>
+<body>
+		<blue-view></blue-view>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+			class UserLoginForm extends React.Component {
+				render() {
+					// 使用defaultValue
+					// 使用defaultChecked等
+					return <form action="http://www.baidu.com" method="get">
+						用户名:<input type="text" name="username" defaultValue={this.props.val} />
+						<br />
+						是否接受邮件：<input type="checkbox" defaultChecked="true" /><br />
+						<input type="submit" value="提交" />
+					</form>;
+				}
+			}
+			$(function() {
+				ReactDOM.render(
+					<UserLoginForm val="aaa"/>,
+					$("blue-view")[0]
+				);
+			});
+    </script>
+</body>
+</html>

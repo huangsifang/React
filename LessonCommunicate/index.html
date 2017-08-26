@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+		<script src="../build/jquery.js"></script>
+</head>
+<body>
+		<blue-view></blue-view>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+			class Child extends React.Component {
+				constructor(...args) {
+					super(...args);
+
+					this.num = 55;
+				}
+				render() {
+					this.props.cb(this.num);
+					return <div>{this.props.a}</div>;
+				}
+			}
+			class Parent extends React.Component {
+				constructor(...args) {
+					super(...args);
+
+					this.a=12;
+				}
+				fn(num) {
+					alert(num);
+				}
+				render() {
+					return <div>
+						<div>aaaa</div>
+						<Child a={this.a} cb={this.fn.bind(this)} />
+						<div>bbbb</div>
+					</div>
+				}
+			}
+			$(function() {
+				ReactDOM.render(
+					<Parent />,
+					$("blue-view")[0]
+				);
+			});
+    </script>
+</body>
+</html>

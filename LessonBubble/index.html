@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script src="../build/react.js"></script>
+    <script src="../build/react-dom.js"></script>
+	<!-- browser.min.js的作用是将JSX语法转化为JavaScript语法 -->
+    <script src="../build/browser.min.js"></script>
+		<script src="../build/jquery.js"></script>
+</head>
+<body>
+		<blue-view></blue-view>
+	<!-- babel是一个转换编译器，ES6转成可以在浏览器中运行的代码 -->
+    <script type="text/babel">
+			class TmpComp extends React.Component {
+				constructor(...args) {
+					super(...args);
+				}
+				fn1() {
+					alert("父级");
+				}
+				fn2(ev) {
+					alert("子级");
+					// 错误：ev.nativeEvent.cancelBubble=true;
+					ev.nativeEvent.stopImmediatePropagation();
+				}
+				render() {
+					return <div onClick={this.fn1.bind(this)}>
+						<div onClick={this.fn2.bind(this)}>aaaa</div>
+					</div>
+				}
+			}
+			$(function() {
+				ReactDOM.render(
+					<TmpComp />,
+					$("blue-view")[0]
+				);
+			});
+    </script>
+</body>
+</html>
