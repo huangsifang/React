@@ -65,3 +65,34 @@ constructor(...args) {
 onChange={this.handleChange}
 后来：
 onChange={this.handleChange.bind(this)}
+
+WebPack
+1.下载webpack工具
+  npm install -g webpack              #webpack的cli环境
+  npm install -g webpack-dev-server   #webpack自带的服务器
+
+2.各种依赖库
+  #babel相关库
+  npm install babel-core -D           #后台编译babel工具
+  npm install babel-preset-es2015 -D  #babel对ES2015的预设
+  npm install babel-loader -D         #babel加载器
+
+  #webpack本身
+  npm install webpack -D              #webpack本地依赖库
+  npm install webpack-dev-server -D   #webpack服务器的本地依赖
+
+  npm install babel-preset-react -D   #babel-react预设
+
+  npm install react -D                #react本身
+  npm install react-dom -D            #react-dom本身
+  npm install react-hot-loader -D     #热更新
+
+  npm install style-loader -D
+  npm install css-loader -D
+
+3.webpack的配置文件
+  webpack.config.js                   #webpack的配置文件
+  .babelrc                            #barbel预设文件
+
+webpack
+webpack-dev-server --hot              #实时编译，实时更新

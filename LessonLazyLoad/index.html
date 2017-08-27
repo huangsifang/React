@@ -55,7 +55,8 @@
 						for(var i = n; i < _this.aImgPath.length; i++) {
 							if(img[i].offsetTop < seeHeight + scrollTop) {
 								if(img[i].getAttribute("src") == null) {
-										img[i].src = img[i].getAttribute("data-src");
+										//img[i].src = img[i].getAttribute("data-src");
+										img[i].src=img[i].dataset.src
 								}
 								n = i + 1;
 							}
